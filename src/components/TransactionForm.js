@@ -47,7 +47,7 @@ const TransactionForm = () => {
         // console.log(formik);
         return (
           <div className="flex border-t border-[#8af1ee] flex-col items-center max-w-[480px] gap-6 sm:gap-8 self-center w-full rounded-lg shadow-lg shadow-slate-700 p-4 py-6">
-            <div className="w-full">
+            <div className="w-full flex justify-between">
               <Link to={"/"}>
                 <img
                   src={back_icon}
@@ -55,6 +55,10 @@ const TransactionForm = () => {
                   className="h-[26px] w-[26px] self-start"
                 />
               </Link>
+              <span className="font-fira text-lg text-[#ff4df9] tracking-widest">
+                {" "}
+                /transaction{" "}
+              </span>
             </div>
             <form
               onSubmit={formik.handleSubmit}

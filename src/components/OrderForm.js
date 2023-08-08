@@ -49,7 +49,7 @@ const OrderForm = () => {
       }}
     >
       <div className="flex flex-col  border-t border-[#8af1ee] items-center max-w-[480px] gap-6 sm:gap-8 self-center w-full rounded-lg shadow-lg shadow-slate-700 p-4 py-6">
-        <div className="w-full">
+        <div className="w-full  flex justify-between">
           <Link to={"/"}>
             <img
               src={back_icon}
@@ -57,6 +57,10 @@ const OrderForm = () => {
               className="h-[26px] w-[26px] self-start"
             />
           </Link>
+          <span className="font-fira text-lg text-[#ff4df9] tracking-widest">
+            {" "}
+            /store/order{" "}
+          </span>
         </div>
         <Form className="flex flex-col justify-stretch w-full gap-5 sm:gap-7">
           <div className="w-full flex flex-col sm:items-center gap-2 sm:flex-row">
