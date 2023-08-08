@@ -6,6 +6,8 @@ export default Yup.object({
     .trim()
     .required("*Required"),
   to: Yup.string().trim().required("*Required"),
-  amount: Yup.number().min(0, "❌ Negative").required("*Required"),
+  amount: Yup.number()
+    .positive("*Amount must be a positive number")
+    .required("*Required"),
   transactionDate: Yup.date().required("*Required"),
 });

@@ -3,19 +3,42 @@ import { Formik, ErrorMessage } from "formik";
 import back_icon from "../../public/assests/back-arrow.svg";
 import validate_transaction from "../utils/validate_transaction";
 import { Link } from "react-router-dom";
+import { post_Transaction } from "../utils/constants";
 
 const TransactionForm = () => {
+  async function postTransaction(data) {
+    const res = await fetch(post_Transaction, {
+      mode: "no-cors",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: data,
+    });
+    // c;
+    // const res_data = await res.json();
+    console.log(res);
+    console.log(res_data);
+  }
+
   return (
     <Formik
       initialValues={{
         from: "",
         to: "",
         amount: 0.0,
-        transactionDate: new Date().toISOString().slice(0, 10),
+        transactionDate: "",
       }}
       validationSchema={validate_transaction}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        alert(JSON.stringify(values));
+        console.log(values);
+        const data = {
+          ...values,
+          transactionDate: new Date(values.transactionDate).toISOString(),
+        };
+        console.log(data);
+        console.log(new Date(values.transactionDate).toISOString());
+        postTransaction(JSON.stringify(data));
         setSubmitting(false);
         resetForm();
       }}
@@ -75,7 +98,7 @@ const TransactionForm = () => {
                   component="div"
                 />
               </div>
-              <div className="w-full flex  flex-col sm:flex-row sm:items-center gap-2">
+              <div className="w-full flex  flex-col sm:flex-row sm:items-center gap-2 flex-wrap">
                 <label htmlFor="amount" className="text-white font-semibold">
                   {" "}
                   Amount :{" "}
@@ -102,7 +125,7 @@ const TransactionForm = () => {
                   Transaction Date :{" "}
                 </label>
                 <input
-                  type="date"
+                  type="datetime-local"
                   id="transactionDate"
                   name="transactionDate"
                   className="grow bg-[hsl(236, 33%, 92%)] rounded-lg py-1 px-3 border-2 focus:outline-0 focus:border-[#3DEFE9]"

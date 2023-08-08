@@ -3,9 +3,24 @@ import { Formik, ErrorMessage, Form, Field } from "formik";
 import validate_order from "../utils/validate_order";
 import back_icon from "../../public/assests/back-arrow.svg";
 import { Link } from "react-router-dom";
+import { post_order } from "../utils/constants";
 
 const OrderForm = () => {
   // console
+
+  async function postOrder(data) {
+    const res = fetch(post_order, {
+      method: "POST",
+      mode: "no-cors",
+      body: data,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    // const res_data = await res.json();
+    console.log(res);
+  }
+
   return (
     <Formik
       initialValues={{
@@ -14,14 +29,21 @@ const OrderForm = () => {
         stoneShape: "",
         stoneSize: "",
         quantity: 0,
-        shipDate: new Date().toISOString().slice(0, 10),
+        shipDate: "",
         status: "placed",
         comments: "",
         complete: true,
       }}
       validationSchema={validate_order}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        alert(JSON.stringify(values, null, 2));
+        console.log(values);
+        const data = {
+          ...values,
+          shipDate: new Date(values.shipDate).toISOString(),
+        };
+        console.log(data);
+        postOrder(JSON.stringify(data));
+        // alert(JSON.stringify(values, null, 2));
         setSubmitting(false);
         resetForm();
       }}
@@ -121,14 +143,14 @@ const OrderForm = () => {
               component="div"
             />
           </div>
-          <div className="w-full flex flex-col sm:items-center gap-2 sm:flex-row">
+          <div className="w-full flex flex-col sm:items-center gap-2 sm:flex-row flex-wrap">
             <label htmlFor="shipDate" className="text-white font-semibold">
               Ship Date :{" "}
             </label>
             <Field
               id="shipDate"
               name="shipDate"
-              type="date"
+              type="datetime-local"
               className="grow  rounded-lg py-1 px-3 border-2 focus:outline-0 focus:border-[#3DEFE9]"
             />
             <ErrorMessage
